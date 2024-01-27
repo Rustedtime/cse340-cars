@@ -4,3 +4,158 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+/******* Style ***********/
+html {
+  background-image: url("../images/site/checkerboard.jpg");
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#top-header {
+  a:link {
+    text-decoration: none;
+    color: #261F1E
+  }
+  
+  a:visited {
+    text-decoration: none;
+    color: #261F1E
+  }
+  
+  a:hover {
+    text-decoration: none;
+    color: #261F1E
+  }
+  
+  a:active {
+    text-decoration: none;
+    color: #261F1E
+  }
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 10px;
+  justify-content: space-between;
+}
+
+#tools {
+  font-size: 14px;
+}
+
+#wrapper {
+  background-color: white;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: rgb(24, 211, 211);
+  border-width: 5px;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+
+.siteName {
+  color: #261F1E;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.copyright {
+  color:gray;
+  font-size: 11px;
+  margin: 10px;
+}
+
+nav {
+  background-color: #261F1E;
+  margin: 10px;
+  .flex-container > div {
+    background-color: #261F1E;
+    color: white;
+    font-size:15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+h1 {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+
+#upgrade-reviews {
+  align-items: stretch;
+}
+
+ul, li {
+  padding: 10px;
+}
+
+td {
+  text-align: center;
+  width: 200px;
+}
+
+.upgrade-description {
+  vertical-align: top;
+  height: 50px;
+}
+
+.upgrade-picture {
+  background-color: rgb(24, 211, 211);
+}
+
+#delorean-splash {
+  background-image: url("../images/vehicles/delorean.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 600px;
+  height: 255px;
+  justify-self: center;
+  justify-content: flex-start;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+#delorean-info {
+  color: rgb(24, 211, 211);
+  background: rgba(255, 255, 255, 0.7);
+  flex-basis: 180px;
+}
+
+#own-today {
+  width: 75%;
+  height: 75%;
+}
