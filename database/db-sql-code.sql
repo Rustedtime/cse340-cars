@@ -59,3 +59,11 @@ VALUES ('Custom'),
 	('Truck'),
 	('Sedan');
 
+-- Modify GM Hummer description
+UPDATE public.inventory
+SET inv_description = REPLACE(inv_description, 'the small interiors', 'a huge interior')
+WHERE inv_model = 'Hummer';
+
+-- Add /vehicles to image file path
+UPDATE public.inventory
+SET inv_image = REPLACE(inv_image, '/images', '/images/vehicles');
