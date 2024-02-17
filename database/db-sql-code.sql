@@ -67,3 +67,7 @@ WHERE inv_model = 'Hummer';
 -- Add /vehicles to image file path
 UPDATE public.inventory
 SET inv_image = REPLACE(inv_image, '/images', '/images/vehicles');
+
+-- Add /vehicles to thumbnail file path
+UPDATE public.inventory
+SET inv_thumbnail = REPLACE(inv_thumbnail, '/images', '/images/vehicles');
