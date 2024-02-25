@@ -22,6 +22,8 @@ module.exports = {
     try {
       const res = await pool.query(text, params)
       console.log("executed query", { text })
+      //console.log("query returned", { res })
+      //console.log("parameters", { params })
       return res
     } catch (error) {
       console.error("error in query", { text })

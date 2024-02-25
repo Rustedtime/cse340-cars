@@ -178,3 +178,52 @@ td {
   width: 75%;
   height: 75%;
 }
+
+#inv-display {
+  align-items: center;
+  justify-content: space-around;
+  align-content: space-around;
+  padding: 20px;
+  
+
+  a:link {
+    text-decoration: none;
+    color: #261F1E
+  }
+  
+  a:visited {
+    text-decoration: none;
+    color: #261F1E
+  }
+  
+  a:hover {
+    text-decoration: none;
+    color: #5c5a5a
+  }
+  
+  a:active {
+    text-decoration: none;
+    color: #261F1E
+  }
+}
+
+.inv-item {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  border-width: 5px;
+}
+
+.details {
+  text-align: left;
+  width: 70px;
+}
+
+#error-title {
+  text-align: center;
+  font-size: 100px;
+}
+
+.center {
+  text-align: center;
+}
