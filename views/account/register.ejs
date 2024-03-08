@@ -1,0 +1,42 @@
+<h1><%- title %></h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+<div class="flex-container">
+    <div id="register">
+        <form action="/account/register" method="post">
+            <br><label for="account_firstname" class="login"><b>First Name:</b></label><br>
+            <input type="text" id="account_firstname" name="account_firstname" class="login" required><br>
+            <label for="account_lastname" class="login"><b>Last Name:</b></label><br>
+            <input type="lname" id="account_lastname" name="account_lastname" class="login" required><br>
+            <label for="account_email" class="login"><b>Email:</b></label><br>
+            <input type="email" id="account_email" name="account_email" class="login" required><br>
+            <label for="account_password" class="login"><b>Password:</b></label><br>
+            <input type="password" id="account_password" name="account_password" class="login" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+            <input type="checkbox" id="show-password" onclick="showPassword()">Show Password
+            <p class="passreq">Password must contain:</p>
+            <ul class="passreq">
+                <li class="passreq">At least 12 characters</li>
+                <li class="passreq">At least 1 capital letter</li>
+                <li class="passreq">At least 1 number</li>
+                <li class="passreq">At least 1 special character</li>
+            </ul>
+            <input type="submit" value="Register" class="login">
+            <script>
+                function showPassword() {
+                  var x = document.getElementById("password");
+                  if (x.type === "password") {
+                    x.type = "text";
+                  } else {
+                    x.type = "password";
+                  }
+                }
+            </script>
+        </form>
+    </div>
+</div>

@@ -35,22 +35,22 @@ html {
 #top-header {
   a:link {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
   
   a:visited {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
   
   a:hover {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
   
   a:active {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
   display: flex;
   flex-wrap: wrap;
@@ -107,22 +107,22 @@ nav {
   }
   a:link {
     text-decoration: none;
-    color: white
+    color: white;
   }
   
   a:visited {
     text-decoration: none;
-    color: white
+    color: white;
   }
   
   a:hover {
     text-decoration: none;
-    color: white
+    color: white;
   }
   
   a:active {
     text-decoration: none;
-    color: white
+    color: white;
   }
 }
 
@@ -188,22 +188,22 @@ td {
 
   a:link {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
   
   a:visited {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
   
   a:hover {
     text-decoration: none;
-    color: #5c5a5a
+    color: #5c5a5a;
   }
   
   a:active {
     text-decoration: none;
-    color: #261F1E
+    color: #261F1E;
   }
 }
 
@@ -226,4 +226,65 @@ td {
 
 .center {
   text-align: center;
+}
+
+#login {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  border-width: 5px;
+  background-color: rgb(133, 183, 183);
+  width: 300px;
+
+  a:link {
+    color: #261F1E;
+  }
+  
+  a:visited {
+    color: #261F1E;
+  }
+  
+  a:hover {
+    color: #261F1E;
+  }
+  
+  a:active {
+    color: #261F1E;
+  }
+}
+
+.login {
+  margin: 5%;
+  padding: 5px;
+  width: 90%;
+}
+
+input[type=button], input[type=submit] {
+  margin-left: 25%;
+  width: 50%;
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  border-width: 5px;
+}
+
+#register {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  border-width: 5px;
+  width: 300px;
+}
+
+#show-password {
+  margin-left: 5%;
+}
+
+.passreq {
+  margin: 5%;
+  padding: 0px;
+  li {
+    margin-left: 15%;
+  }
 }
