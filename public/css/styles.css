@@ -269,7 +269,7 @@ input[type=button], input[type=submit] {
   border-width: 5px;
 }
 
-#register {
+.register {
   border-style: solid;
   border-radius: 10px;
   border-color: rgb(0, 0, 0);
@@ -287,4 +287,25 @@ input[type=button], input[type=submit] {
   li {
     margin-left: 15%;
   }
+}
+
+a:link {
+  color: #261F1E;
+}
+
+a:visited {
+  color: #261F1E;
+}
+
+a:hover {
+  color: #261F1E;
+}
+
+a:active {
+  color: #261F1E;
+}
+
+.notice {
+  margin-left: 5%;
+  color: red;
 }

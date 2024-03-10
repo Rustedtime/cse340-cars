@@ -24,7 +24,7 @@ async function buildRegister(req, res, next) {
     })
   }
 
-  /* ****************************************
+/* ****************************************
 *  Process Registration
 * *************************************** */
 async function registerAccount(req, res) {
