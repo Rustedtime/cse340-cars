@@ -1,0 +1,42 @@
+<h1><%- title %></h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+<div class="flex-container">
+    <div class="register">
+        <form action="/inv/update" method="post" id="updateForm">
+            <br><label for="inv_make" class="login"><b>Make:</b></label><br>
+            <input type="text" id="inv_make" name="inv_make" class="login" pattern="^[a-zA-Z0-9]*$" value="<%- inv_make %>" required><br>
+            <label for="inv_model" class="login"><b>Model:</b></label><br>
+            <input type="text" id="inv_model" name="inv_model" class="login" pattern="^[a-zA-Z0-9]*$" value="<%- inv_model %>" required><br>
+            <label for="inv_year" class="login"><b>Year:</b></label><br>
+            <input type="text" id="inv_year" name="inv_year" class="login" pattern="^[0-9]{4}" value="<%- inv_year %>" required><br>
+            <label for="inv_description" class="login"><b>Description:</b></label><br>
+            <textarea id="inv_description" name="inv_description" class="login" required><%- inv_description %></textarea><br>
+            <label for="inv_image" class="login"><b>Image:</b></label><br>
+            <input type="text" id="inv_image" name="inv_image" class="login" value="<%- inv_image %>" required><br>
+            <label for="inv_thumbnail" class="login"><b>Thumbnail:</b></label><br>
+            <input type="text" id="inv_thumbnail" name="inv_thumbnail" class="login" value="<%- inv_thumbnail %>" required><br>
+            <label for="inv_price" class="login"><b>Price:</b></label><br>
+            <input type="text" id="inv_price" name="inv_price" class="login" pattern="^[0-9]*$" value="<%- inv_price %>" required><br>
+            <label for="inv_miles" class="login"><b>Miles:</b></label><br>
+            <input type="text" id="inv_miles" name="inv_miles" class="login" pattern="^[0-9]*$" value="<%- inv_miles %>" required><br>
+            <label for="inv_color" class="login"><b>Color:</b></label><br>
+            <input type="text" id="inv_color" name="inv_color" class="login" pattern="^[a-zA-Z]*$" value="<%- inv_color %>" required><br>
+            <label for="classification_id" class="login"><b>Classification:</b></label><br>
+            <select id="classification_id" name="classification_id" class="login">
+                <%- dropdown %>
+            </select><br>
+            <input type="submit" value="Update Vehicle" class="login" id="updateSubmit" disabled>
+            <input type="hidden" name="inv_id"
+            <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+            <% } %>>
+        </form>
+    </div>
+</div>
+<script src="../../js/inv-update.js"></script>

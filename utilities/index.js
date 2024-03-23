@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -93,14 +95,19 @@ Util.buildDetailsGrid = async function(data){
 /* ************************
  * Constructs classification dropdown
  ************************** */
-Util.buildClassificationDropdown = async function (req, res, next) {
+Util.buildClassificationDropdown = async function (selected=0) {
   let data = await invModel.getClassifications()
   let list = '<option value="0">Choose a classification</option>'
   data.rows.forEach((row) => {
     list +=
       '<option value="' +
       row.classification_id +
-      '">' +
+      '"' 
+    if (row.classification_id == selected) {
+      list += ' selected="selected"'
+    }
+    list +=
+      '>' +
       row.classification_name +
       '</option>'
   })
@@ -108,6 +115,58 @@ Util.buildClassificationDropdown = async function (req, res, next) {
   return list
 }
 
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+     }
+     res.locals.accountData = accountData
+     res.locals.loggedin = 1
+     next()
+    })
+  } else {
+   next()
+  }
+ }
+
+ /* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
+ /* ****************************************
+ *  Check Not Client
+ * ************************************ */
+ Util.checkNotClient = (req, res, next) => {
+  if (res.locals.loggedin) {
+    if (res.locals.accountData.account_type != 'Client') {
+      next()
+    } else {
+      req.flash("notice", "You don't have permission to view to that page.")
+      return res.redirect("/account")
+    } 
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+  
+ }
 
   /* ****************************************
  * Middleware For Handling Errors

@@ -2,7 +2,7 @@
 <%- messages() %>
 <div class="flex-container">
     <div id="login">
-        <form>
+        <form action="/account/login" method="post">
             <br><label for="account_email" class="login"><b>Email:</b></label><br>
             <input type="email" id="account_email" name="account_email" class="login" required><br>
             <label for="password" class="login"><b>Password:</b></label><br>
