@@ -158,14 +158,65 @@ Util.checkJWTToken = (req, res, next) => {
     if (res.locals.accountData.account_type != 'Client') {
       next()
     } else {
-      req.flash("notice", "You don't have permission to view to that page.")
-      return res.redirect("/account")
+      req.flash("notice", "You must be logged in as an Employee or Admin to view that page.")
+      return res.redirect("/account/login")
     } 
   } else {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
   
+ }
+
+ /* ************************
+ * Constructs the My Account header
+ ************************** */
+Util.getAccountTools = async function (req, res) {
+  let tools
+  if (res.locals.loggedin) {
+    tools = '<a title="Click to log out" href="/account/login" id="logout">Log Out</a><br><a title="Click view account details" href="/account">Welcome, ' + res.locals.accountData.account_firstname + '</a>'
+  } else {
+    tools = '<a title="Click to log in" href="/account/login">My Account</a>'
+  }
+
+  return tools
+}
+
+/* ************************
+ * Constructs account greeting
+ ************************** */
+Util.getGreeting = async function (req, res) {
+  let greeting
+  if (res.locals.loggedin) {
+    if (res.locals.accountData.account_type == 'Client') {
+      greeting = '<h2>Welcome, ' + res.locals.accountData.account_firstname + '</h2><br><a title="Click to update account information" href="/account/update">Update Account Information</a>'
+    } else {
+      greeting = 
+        '<h2>Welcome, ' + 
+        res.locals.accountData.account_firstname + 
+        '</h2><br><a title="Click to update account information" href="/account/update">Update Account Information</a><br>' +
+        '<br><h3>Inventory Management</h3><br><a title="Click to manage inventory" href="/inv/management">Manage Inventory</a>'
+    } 
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+
+  return greeting
+}
+
+/* ****************************************
+ *  Check Log out
+ * ************************************ */
+Util.checkLogout = (req, res, next) => {
+  if (res.locals.loggedin) {
+    res.locals.loggedin = 0
+    res.clearCookie("jwt")
+    req.flash("notice", "You have logged out")
+    return res.redirect("/")
+  } else {
+    next()
+  }
  }
 
   /* ****************************************

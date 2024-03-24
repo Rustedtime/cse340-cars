@@ -134,6 +134,11 @@ h1 {
   font-size: 30px;
 }
 
+h2, h3, p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 #upgrade-reviews {
   align-items: stretch;
 }
@@ -308,4 +313,12 @@ a:active {
 .notice {
   margin-left: 5%;
   color: red;
+}
+
+#logout {
+  align-self: right;
+}
+
+#classificationList {
+  margin-left: 10px;
 }

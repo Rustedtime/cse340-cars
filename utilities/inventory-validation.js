@@ -25,10 +25,12 @@ validate.checkClassData = async (req, res, next) => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
+      let tools = await utilities.getAccountTools(req, res)
       res.render("inventory/add-classification", {
         errors,
         title: "Add new vehicle classification",
         nav,
+        tools,
         classification_name,
       })
       return
@@ -107,11 +109,13 @@ validate.checkInvData = async (req, res, next) => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
+      let tools = await utilities.getAccountTools(req, res)
       let dropdown = await utilities.buildClassificationDropdown(classification_id)
       res.render("inventory/add-inventory", {
         errors,
         title: "Add new vehicle classification",
         nav,
+        tools,
         dropdown,
         inv_make, 
         inv_model, 
@@ -138,11 +142,13 @@ validate.checkUpdateData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    let tools = await utilities.getAccountTools(req, res)
     let dropdown = await utilities.buildClassificationDropdown(classification_id)
     res.render("inventory/edit-inventory", {
       errors,
       title: "Edit " + inv_make + inv_model,
       nav,
+      tools,
       dropdown,
       inv_make, 
       inv_model, 

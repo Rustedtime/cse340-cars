@@ -11,6 +11,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   let className
   if (data.length > 0){
     className = data[0].classification_name
@@ -20,6 +21,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   res.render("./inventory/classification", {
     title: className + " vehicles",
     nav,
+    tools,
     grid,
   })
 }
@@ -41,9 +43,11 @@ invCont.buildByInvId = async function (req, res, next) {
     model = "Oops x 2"
   } 
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   res.render("./inventory/detail", {
     title: make + " " + model,
     nav,
+    tools,
     grid,
   })
 }
@@ -53,10 +57,12 @@ invCont.buildByInvId = async function (req, res, next) {
 * *************************************** */
 invCont.buildManagement = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   let dropdown = await utilities.buildClassificationDropdown()
   res.render("inventory/management", {
     title: "Inventory Management",
     nav,
+    tools,
     dropdown,
     errors: null,
   })
@@ -67,9 +73,11 @@ invCont.buildManagement = async function (req, res, next) {
 * *************************************** */
 invCont.buildAddClassification = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   res.render("inventory/add-classification", {
     title: "Add new vehicle classification",
     nav,
+    tools,
     errors: null,
   })
 }
@@ -79,6 +87,7 @@ invCont.buildAddClassification = async function (req, res, next) {
 * *************************************** */
 invCont.addClassification = async function (req, res) {
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   const { classification_name } = req.body
 
   const classResult = await invModel.addClassification(
@@ -93,6 +102,7 @@ invCont.addClassification = async function (req, res) {
     res.status(201).render("inventory/add-classification", {
       title: "Add new vehicle classification",
       nav,
+      tools,
       errors: null,
     })
   } else {
@@ -100,6 +110,7 @@ invCont.addClassification = async function (req, res) {
     res.status(501).render("inventory/add-classification", {
       title: "Add new vehicle classification",
       nav,
+      tools,
     })
   }
 }
@@ -109,10 +120,12 @@ invCont.addClassification = async function (req, res) {
 * *************************************** */
 invCont.buildAddInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   let dropdown = await utilities.buildClassificationDropdown(0)
   res.render("inventory/add-inventory", {
     title: "Add new vehicle",
     nav,
+    tools,
     dropdown,
     errors: null,
   })
@@ -123,6 +136,7 @@ invCont.buildAddInventory = async function (req, res, next) {
 * *************************************** */
 invCont.addInventory = async function (req, res) {
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   
   const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
   let dropdown = await utilities.buildClassificationDropdown(classification_id)
@@ -147,6 +161,7 @@ invCont.addInventory = async function (req, res) {
     res.status(201).render("inventory/add-inventory", {
       title: "Add new vehicle to inventory",
       nav,
+      tools,
       dropdown,
       errors: null,
     })
@@ -155,6 +170,7 @@ invCont.addInventory = async function (req, res) {
     res.status(501).render("inventory/add-inventory", {
       title: "Add new vehicle to inventory",
       nav,
+      tools,
       dropdown,
     })
   }
@@ -179,6 +195,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.editByInvId = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   const invData = await invModel.getInventoryById(inv_id)
   let itemData
   if (invData.length > 0) {
@@ -192,6 +209,7 @@ invCont.editByInvId = async function (req, res, next) {
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
     nav,
+    tools,
     dropdown: dropdown,
     errors: null,
     inv_id: itemData.inv_id,
@@ -213,6 +231,7 @@ invCont.editByInvId = async function (req, res, next) {
  * ************************** */
 invCont.updateInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
   const {
     inv_id,
     inv_make,
@@ -251,6 +270,7 @@ invCont.updateInventory = async function (req, res, next) {
     res.status(501).render("inventory/edit-inventory", {
     title: "Edit " + itemName,
     nav,
+    tools,
     classificationSelect: classificationSelect,
     errors: null,
     inv_id,

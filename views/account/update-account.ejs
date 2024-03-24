@@ -9,13 +9,21 @@
   <% } %>
 <div class="flex-container">
     <div class="register">
-        <form action="/account/register" method="post">
+        <h3>Edit account information</h3>
+        <form action="/account/update" method="post" id="accountInfo">
             <br><label for="account_firstname" class="login"><b>First Name:</b></label><br>
-            <input type="text" id="account_firstname" name="account_firstname" class="login" required><br>
+            <input type="text" id="account_firstname" name="account_firstname" class="login" value="<%- account_firstname %>" required><br>
             <label for="account_lastname" class="login"><b>Last Name:</b></label><br>
-            <input type="lname" id="account_lastname" name="account_lastname" class="login" required><br>
+            <input type="lname" id="account_lastname" name="account_lastname" class="login" value="<%- account_lastname %>" required><br>
             <label for="account_email" class="login"><b>Email:</b></label><br>
-            <input type="email" id="account_email" name="account_email" class="login" required><br>
+            <input type="email" id="account_email" name="account_email" class="login" value="<%- account_email %>" required><br>
+            <input type="submit" value="Update" class="login" id="updateSubmit" disabled>
+            <input type="hidden" name="account_id" value="<%- account_id %>">
+        </form>
+    </div>
+    <div class="register">
+        <h3>Change password</h3>
+        <form action="/account/" method="post" id="changePassword">
             <label for="account_password" class="login"><b>Password:</b></label><br>
             <input type="password" id="account_password" name="account_password" class="login" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
             <input type="checkbox" id="show-password" onclick="showPassword()">Show Password
@@ -26,17 +34,9 @@
                 <li class="passreq">At least 1 number</li>
                 <li class="passreq">At least 1 special character</li>
             </ul>
-            <input type="submit" value="Register" class="login">
-            <script>
-                function showPassword() {
-                  var x = document.getElementById("account_password");
-                  if (x.type === "password") {
-                    x.type = "text";
-                  } else {
-                    x.type = "password";
-                  }
-                }
-            </script>
+            <input type="submit" value="Change password" class="login" id="passwordSubmit" disabled>
+            <input type="hidden" name="account_id" value="<%- account_id %>">
         </form>
     </div>
 </div>
+<script src="../../js/acc-update.js"></script>
