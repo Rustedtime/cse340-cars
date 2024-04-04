@@ -219,6 +219,93 @@ Util.checkLogout = (req, res, next) => {
   }
  }
 
+ /* **************************************
+* Build the classification view HTML
+* ************************************ */
+Util.buildReviewsGrid = async function(data){
+  let grid = '<h1>Reviews</h2>'
+  if(data.length > 0){
+    data.forEach(review => { 
+      grid += '<h3 class="review-user">' + review.account_firstname + ' ' + review.account_lastname + '</h3>'
+      grid += '<div class="flex-container" id="review-stars">'
+      let star = 0
+      while (star < review.review_score) {
+        grid += '<img src="../../images/site/yellow-star.png"></img>'
+        star += 1
+      }
+      while (star < 5) {
+        grid += '<img src="../../images/site/gray-star.png"></img>'
+        star += 1
+      }
+      grid += '</div><br>'
+      grid += '<p class="timestamp">' + review.review_time + '</p>'
+      grid += '<p class="review-content">' + review.review_content + '</p><br><br>'
+    })
+    grid += '<br><br>'
+  }
+  return grid
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.buildReviewForm = async function(req, res, inv_id) {
+  let grid = ''
+  if (res.locals.loggedin) {
+    grid += '<h3>Leave a review</h3>'
+    grid += '<form class="review" action="/inv/detail/' + inv_id + '" method="post">'
+    grid += '<label for="1-star" class="review">' +
+      '<img src="../../images/site/yellow-star.png"></img>' + 
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '</label>'
+    grid += '<input type="radio" id="1-star" name="review_score" value="1"><br>'
+    grid += '<label for="2-star" class="review">' +
+      '<img src="../../images/site/yellow-star.png"></img>' + 
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '</label>'
+    grid += '<input type="radio" id="2-star" name="review_score" value="2"><br>'
+    grid += '<label for="3-star" class="review">' +
+      '<img src="../../images/site/yellow-star.png"></img>' + 
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '</label>'
+    grid += '<input type="radio" id="3-star" name="review_score" value="3"><br>'
+    grid += '<label for="4-star" class="review">' +
+      '<img src="../../images/site/yellow-star.png"></img>' + 
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/gray-star.png"></img>' +
+      '</label>'
+    grid += '<input type="radio" id="4-star" name="review_score" value="4"><br>'
+    grid += '<label for="5-star" class="review">' +
+      '<img src="../../images/site/yellow-star.png"></img>' + 
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '<img src="../../images/site/yellow-star.png"></img>' +
+      '</label>'
+    grid += '<input type="radio" id="5-star" name="review_score" value="5" checked><br><br>'
+    grid += '<label for="review_content" class="review"><b>Review</b></label><br>'
+    grid += '<textarea id="review_content" name="review_content" class="review" required></textarea><br>'
+    grid += '<input type="hidden" name="inv_id" value="' + inv_id + '">'
+    grid += '<input type="hidden" name="account_id" value="' + res.locals.accountData.account_id + '">'
+    grid += '<input type="submit" value="Post Review" class="login" id="postReview">'
+    grid += '</form>'
+  } else {
+    grid += '<p>Please <a title="Click to log in" href="/account/login">login</a> to leave a review'
+  }
+  return grid
+ }
+
   /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

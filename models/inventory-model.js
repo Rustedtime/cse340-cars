@@ -105,4 +105,34 @@ async function updateInventory(
   }
 }
 
-  module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory};
+/* ***************************
+ *  Get one inventory item by inv_id
+ * ************************** */
+async function getReviewsByInvId(inv_id) {
+  try {
+    const data = await pool.query(
+      `SELECT review_time, review_content, review_score, account_firstname, account_lastname FROM public.review AS i 
+      JOIN public.account AS a 
+      ON i.account_id = a.account_id 
+      WHERE i.inv_id = $1`,
+      [inv_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getreviesbyinvid error " + error)
+  }
+}
+
+/* ***************************
+ *  Add new vehicle review
+ * ************************** */
+async function addReview(review_content, review_score, inv_id, account_id){
+  try {
+    const sql = "INSERT INTO review (review_time, review_content, review_score, inv_id, account_id) VALUES (NOW(), $1, $2, $3, $4) RETURNING *"
+    return await pool.query(sql, [review_content, review_score, inv_id, account_id])
+  } catch (error) {
+    return error.message
+  }
+}
+
+  module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory, getReviewsByInvId, addReview};

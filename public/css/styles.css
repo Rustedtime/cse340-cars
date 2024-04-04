@@ -322,3 +322,23 @@ a:active {
 #classificationList {
   margin-left: 10px;
 }
+
+#review-stars {
+  justify-content: left;
+  align-items: center;
+  margin: 10px;
+}
+
+.review-content {
+  margin-left: 40px;
+}
+
+.review {
+  width: 90%;
+  margin-left: 5%;
+}
+
+#review_content {
+  height: 100px;
+}
+

@@ -32,7 +32,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 invCont.buildByInvId = async function (req, res, next) {
   const inv_id = req.params.invId
   const data = await invModel.getInventoryById(inv_id)
-  const grid = await utilities.buildDetailsGrid(data)
+  const reviews = await invModel.getReviewsByInvId(inv_id)
   let make
   let model
   if (data.length > 0){
@@ -42,13 +42,23 @@ invCont.buildByInvId = async function (req, res, next) {
     make = "Oops."
     model = "Oops x 2"
   } 
+  const grid = await utilities.buildDetailsGrid(data)
   let nav = await utilities.getNav()
   let tools = await utilities.getAccountTools(req, res)
+  let reviewsGrid
+  if (reviews.length > 0) {
+    reviewsGrid = await utilities.buildReviewsGrid(reviews)
+  } else {
+    reviewsGrid = "<p>This inventory item has no reviews</p>"
+  }
+  let reviewForm = await utilities.buildReviewForm(req, res, inv_id)
   res.render("./inventory/detail", {
     title: make + " " + model,
     nav,
     tools,
     grid,
+    reviewsGrid,
+    reviewForm,
   })
 }
 
@@ -286,6 +296,54 @@ invCont.updateInventory = async function (req, res, next) {
     classification_id
     })
   }
+}
+
+/* ***************************
+ *  Posting a new review
+ * ************************** */
+invCont.postReview = async function (req, res, next) {
+  const inv_id = req.params.invId
+  const data = await invModel.getInventoryById(inv_id)
+  let make
+  let model
+  if (data.length > 0){
+    make = data[0].inv_make
+    model = data[0].inv_model
+  } else {
+    make = "Oops."
+    model = "Oops x 2"
+  } 
+  const grid = await utilities.buildDetailsGrid(data)
+  let nav = await utilities.getNav()
+  let tools = await utilities.getAccountTools(req, res)
+  const { review_content, review_score, account_id } = req.body
+  const reviewResult = await invModel.addReview(
+    review_content,
+    review_score,
+    inv_id,
+    account_id
+  )
+  const reviews = await invModel.getReviewsByInvId(inv_id)
+  let reviewsGrid
+  if (reviews.length > 0) {
+    reviewsGrid = await utilities.buildReviewsGrid(reviews)
+  } else {
+    reviewsGrid = "<p>This inventory item has no reviews</p>"
+  }
+  let reviewForm = await utilities.buildReviewForm(req, res, inv_id)
+  if (reviewResult) {
+    req.flash("notice", `Review posted.`)
+  } else {
+    req.flash("notice", `Unable to post review.`)
+  }
+  res.render("./inventory/detail", {
+    title: make + " " + model,
+    nav,
+    tools,
+    grid,
+    reviewsGrid,
+    reviewForm,
+  })
 }
 
 module.exports = invCont

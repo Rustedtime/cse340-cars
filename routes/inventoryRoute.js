@@ -2,7 +2,7 @@
 const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
-const regValidate = require('../utilities/inventory-validation')
+const invValidate = require('../utilities/inventory-validation')
 const utilities = require('../utilities/index')
 
 // Route to build inventory by classification view
@@ -10,6 +10,14 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 
 // Route to build inventory details page
 router.get("/detail/:invId", invController.buildByInvId);
+// Process new review
+router.post(
+  "/detail/:invId",
+  invValidate.reviewRules(),
+  invValidate.checkReviewData,
+  utilities.checkLogin,
+  invController.postReview
+)
 
 // Inventory management routes
 router.get("/management", utilities.checkNotClient, invController.buildManagement)
@@ -18,8 +26,8 @@ router.get("/management/addclassification", utilities.checkNotClient, invControl
 // Process new classification
 router.post(
     "/management/addclassification",
-    regValidate.classificationRules(),
-    regValidate.checkClassData,
+    invValidate.classificationRules(),
+    invValidate.checkClassData,
     utilities.checkNotClient,
     invController.addClassification
   )
@@ -28,8 +36,8 @@ router.get("/management/addvehicle", utilities.checkNotClient, invController.bui
 // Process new inventory
 router.post(
     "/management/addvehicle",
-    regValidate.inventoryRules(),
-    regValidate.checkInvData,
+    invValidate.inventoryRules(),
+    invValidate.checkInvData,
     utilities.checkNotClient,
     invController.addInventory
   )
@@ -39,8 +47,8 @@ router.get("/edit/:invId", utilities.checkNotClient, invController.editByInvId);
 // Route to process inventory update
 router.post(
     "/update/",
-    regValidate.inventoryRules(),
-    regValidate.checkUpdateData, 
+    invValidate.inventoryRules(),
+    invValidate.checkUpdateData, 
     utilities.checkNotClient, 
     invController.updateInventory
   )
